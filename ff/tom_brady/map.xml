@@ -853,9 +853,7 @@
 </score>
 <kill-rewards>
     <kill-reward>
-        <kit>
-            <item slot="8" locked="true" material="golden apple"/>
-        </kit>
+        <item locked="true" material="golden apple"/>
     </kill-reward>
     <kill-reward filter="any(victim-has-flag,victim-died-with-flag)" action="flag-steal-event" victim-action="death-player-state"/>
 </kill-rewards>
