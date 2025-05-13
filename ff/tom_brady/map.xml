@@ -46,6 +46,8 @@
     <contributor uuid="2fd57dff-4cff-4b60-96a4-d26e37759c03" contribution="XML"/> <!-- Furrie -->
     <contributor uuid="9d4779a8-d35f-45d2-b51c-95de7a77e128" contribution="Bridge Snippets"/> <!-- zzuf -->
     <contributor uuid="c25a6f7b-4c42-40da-8cd6-add53f0c84eb" contribution="XML"/> <!-- arcadeboss -->
+    <contributor uuid="e419983c-bb20-438d-b900-717f131a272f" contribution="XML"/> <!-- KuNet -->
+    <contributor uuid="aa6a6b35-db22-4cff-bfce-3093cf4cf2e6" contribution="XML"/> <!-- honeyfuggle -->
 </contributors>
 <respawn auto="true" delay="3s"/>
 <gamerules>
@@ -853,7 +855,9 @@
 </score>
 <kill-rewards>
     <kill-reward>
-        <item locked="true" material="golden apple"/>
+        <kit deduct-items="false">
+            <item material="golden apple" locked="true" slot="8"/>
+        </kit>
     </kill-reward>
     <kill-reward filter="any(victim-has-flag,victim-died-with-flag)" action="flag-steal-event" victim-action="death-player-state"/>
 </kill-rewards>
