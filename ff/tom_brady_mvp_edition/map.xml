@@ -736,6 +736,7 @@
     <cuboid id="playing-field" min="-47,23,-89" max="0,30,0"/>
     <apply block-break="never"/>
     <apply block-physics="never"/>
+    <apply use="never"/>
     <apply enter="deny(only-blue)" region="team-one-portal" message="You may not enter your own goal!"/>
     <apply enter="deny(only-red)" region="team-two-portal" message="You may not enter your own goal!"/>
     <apply enter="carrying-snowball" region="nets" message="You may not enter the goal without the Flag!"/>
