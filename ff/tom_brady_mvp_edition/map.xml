@@ -1,7 +1,7 @@
 <map proto="1.5.0">
 <name>Tom Brady: MVP Edition</name>
 <game>Flag Football</game>
-<version>1.0.7</version>
+<version>1.0.1</version>
 <objective>Capture the flag at the end zone on the enemies side!</objective>
 <created>2025-05-16</created>
 <stats>
@@ -19,7 +19,7 @@
     <constant id="map-origin">55.5,0,144.5</constant>
     <constant id="score-limit">5</constant>
     <constant id="mercy-limit">-1</constant>
-    <constant id="void-plane">-64</constant>
+    <constant id="void-plane">20</constant>
     <constant id="main-kit">keeper-kit</constant>
     <constant id="goal-scorer">1</constant>
     <constant id="natural-regeneration">false</constant>
@@ -710,6 +710,9 @@
             <replace material="air"/>
         </replace-item>
     </action>
+    <action id="air" scope="match" expose="true">
+        <fill region="barriers" material="air"/>
+    </action>
 </actions>
 <regions>
     <!-- Scoring nets -->
@@ -734,6 +737,11 @@
     </negative>
     <!-- Main playing region -->
     <cuboid id="playing-field" min="-47,23,-89" max="0,30,0"/>
+    <!-- Barriers -->
+    <union id="barriers">
+        <cuboid min="1, 24, -100" max="2, 28, 11"/>
+        <cuboid min="-49, 24, -100" max="-48, 28, 11"/>
+    </union>
     <apply block-break="never"/>
     <apply block-physics="never"/>
     <apply use="never"/>
