@@ -798,7 +798,7 @@
         <!-- Blue's Net -->
         <cuboid id="team-one-portal" min="117,5,151" max="66,10,141"/> <!-- where red scores -->
         <!-- Red's Net -->
-        <cuboid id="team-two-portal" min="66,5,52" max="117,10,61"/> <!-- where blue scores -->
+        <cuboid id="team-two-portal" min="66,5,52" max="117,10,62"/> <!-- where blue scores -->
     </union>
     <!-- Round cages -->
     <union id="cages">
