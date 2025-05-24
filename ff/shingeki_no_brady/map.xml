@@ -1,7 +1,7 @@
 <map proto="1.5.0">
 <name>Shingeki no Brady</name>
 <game>Flag Football</game>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <objective>Capture the flag at the end zone on the enemies' side!</objective>
 <created>2025-05-21</created>
 <time result="score" overtime="1m" max-overtime="1m">10m</time>
@@ -30,8 +30,8 @@
     <constant id="max-health">20</constant>
     <constant id="show-tutorial">1</constant>
     <!-- Teams -->
-    <constant id="team-one-spawn">91.5,17,53.5</constant>
-    <constant id="team-two-spawn">91.5,17,149.5</constant>
+    <constant id="team-one-spawn">91.5,17,149.5</constant>
+    <constant id="team-two-spawn">91.5,17,53.5</constant>
     <constant id="team-one-yaw">0</constant>
     <constant id="team-two-yaw">180</constant>
     <constant id="team-one-pitch">0</constant>
