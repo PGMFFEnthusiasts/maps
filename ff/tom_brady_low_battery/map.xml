@@ -58,7 +58,7 @@
     <spawn team="team-two" kit="map-kit" yaw="${team-two-yaw}" pitch="${team-two-pitch}" region="team-two-spawn-point"/>
     <default>
         <regions>
-            <point yaw="90">45,43,-54.5</point>
+            <point yaw="90">9.5,28,-44.5</point>
         </regions>
     </default>
 </spawns>
