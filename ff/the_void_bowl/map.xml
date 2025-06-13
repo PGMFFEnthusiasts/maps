@@ -6,7 +6,7 @@
 <!-- ======================================================================= -->
 <name>The Void Bowl</name>
 <game>Flag Football</game>
-<version>1.0.2</version>
+<version>1.0.0</version>
 <objective>Capture the flag at the end zone on the enemies' side!</objective>
 <if variant="default">
     <created>2025-06-04</created>
