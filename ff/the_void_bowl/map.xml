@@ -6,7 +6,7 @@
 <!-- ======================================================================= -->
 <name>The Void Bowl</name>
 <game>Flag Football</game>
-<version>1.0.0</version>
+<version>1.0.2</version>
 <objective>Capture the flag at the end zone on the enemies' side!</objective>
 <if variant="default">
     <created>2025-06-04</created>
@@ -47,7 +47,7 @@
     <constant id="team-one-pitch">0</constant>
     <constant id="team-two-pitch">0</constant>
 </constants>
-<time result="score" overtime="1m" max-overtime="0m">${time-limit}m</time>
+<time result="score" overtime="5m" max-overtime="0m">${time-limit}m</time>
 <authors>
     <author uuid="f610e558-a3c8-44fb-8622-68cc49dbc18f" contribution="Map"/> <!-- Julianswl -->
     <author uuid="c25a6f7b-4c42-40da-8cd6-add53f0c84eb" contribution="XML Refinements/Adjustments"/> <!-- arcadeboss -->
@@ -392,11 +392,11 @@
     <not id="no-absorption">
         <effect>absorption</effect>
     </not>
-    <all id="after-13m">
-        <time>13m</time>
+    <all id="after-20m">
+        <time>20m</time>
         <variable id="overtime-disabled" var="overtime">0</variable>
     </all>
-    <after duration="2m" filter="after-13m">
+    <after duration="5m" filter="after-20m">
         <message>`4» `fThe match will `cend`f in {0} `4«</message>
     </after>
     <observing id="is-observer"/>
@@ -786,7 +786,7 @@
     <trigger scope="match">
         <filter>
             <all>
-                <time>15m</time>
+                <time>20m</time>
                 <filter id="overtime-disabled"/>
             </all>
         </filter>
