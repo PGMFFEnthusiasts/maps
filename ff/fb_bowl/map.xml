@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Fireballs Bowl</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2025-12-26</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -9,14 +9,14 @@
     <constant id="team-two-name">Red</constant>
     <constant id="team-one-color">blue</constant>
     <constant id="team-two-color">red</constant>
-    <constant id="team-one-spawn">-93.5,12,0.5</constant> 
+    <constant id="team-one-spawn">-71.5,12,0.5</constant> 
     <constant id="team-one-yaw">-90</constant>
-    <constant id="team-two-spawn">94.5,12,0.5</constant>
+    <constant id="team-two-spawn">72.5,12,0.5</constant>
     <constant id="team-two-yaw">90</constant>
     <constant id="flag-post">0.5,7,0.5</constant>
     <constant id="gridiron-engine">true</constant>
-    <constant id="team-one-flag-post">-65.5,4,0.5</constant> <!-- Where flag respawns after a score -->
-    <constant id="team-two-flag-post">66.5,4,0.5</constant>
+    <constant id="team-one-flag-post">-42.5,4,0.5</constant> <!-- Where flag respawns after a score -->
+    <constant id="team-two-flag-post">43.5,4,0.5</constant>
     <constant id="void-plane">-1</constant> 
     <constant id="time-limit">15m</constant>
     <constant id="flag-respawn">7s</constant>
@@ -38,8 +38,8 @@
     </default>
 </spawns>
 <regions>
-    <cuboid id="playing-field" min="-89,3,40" max="90,10,-39"/>
-    <cuboid id="team-one-portal" min="-89,3,40" max="-72,10,-39"/> <!-- Red Scores Here -->
-    <cuboid id="team-two-portal" min="73,3,40" max="90,10,-39"/> <!-- Blue Scores Here -->
+    <cuboid id="playing-field" min="-67,3,40" max="68,10,-39"/>
+    <cuboid id="team-one-portal" min="-50,3,40" max="-67,10,40"/> <!-- Red Scores Here -->
+    <cuboid id="team-two-portal" min="51,3,40" max="68,10,-39"/> <!-- Blue Scores Here -->
 </regions>
 </map>
