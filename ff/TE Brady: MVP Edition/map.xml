@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>TE Brady: MVP Edition</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2025-12-28</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -61,4 +61,5 @@
     <respawn delay="2s"/>
 </respawns>
 </map>
+
 
