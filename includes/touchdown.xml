@@ -1,7 +1,7 @@
 <map>
 <!-- Touchdown gamemode include file -->
 <!-- XML by zzuf, arcadeboss, MewTwoKing, Furrie, TommyHillfigger, KuNet, honeyfuggle & mameBT -->
-<!-- Version 2025.10.16-3 -->
+<!-- Version 2026.02.16-1 -->
 <game>Touchdown</game>
 <objective>Capture the flag at the end zone on the enemies' side!</objective>
 <constants fallback="true">
@@ -63,7 +63,7 @@
     <constant id="mercy-limit">-1</constant>
     <constant id="indicator-outer-material">sea lantern</constant> <!-- Delete to disable physical indicators -->
     <constant id="indicator-inner-material" delete="true"/>
-    <constant id="show-tutorial">0</constant> <!-- 0: disable tutorial; 1: enable tutorial -->
+    <constant id="show-tutorial">1</constant> <!-- 0: disable tutorial; 1: enable tutorial -->
     <!-- Experimental or alternate options -->
     <constant id="team-flag-posts">false</constant>
     <constant id="gridiron-engine">false</constant>
@@ -87,6 +87,26 @@
     <constant id="friendly-fire-refund">off</constant>
     <constant id="gapple-slot">8</constant>
 </constants>
+<variables>
+    <with-team id="team_one_score" var="score" team="team-one"/>
+    <with-team id="team_two_score" var="score" team="team-two"/>
+    <variable id="game_state" scope="match" default="${initial}"/>
+    <variable id="can_score" scope="match" default="1"/>
+    <variable id="round_status" scope="match" default="1"/> <!-- 0: team scored; 1: flag is active -->
+    <variable id="buytime" scope="match" default="0"/>
+    <variable id="do_fire" scope="match" default="0"/>
+    <variable id="overtime" scope="match" default="${overtime-default}"/>
+    <variable id="scoring_team" scope="match" default="0"/>
+    <variable id="show_tutorial" scope="match" default="${show-tutorial}"/>
+    <variable id="player_state" scope="player" default="${initial}" exclusive="1"/>
+    <variable id="player_score" scope="player" default="0"/>
+    <variable id="goal_scorer" scope="player" exclusive="1"/>
+    <variable id="flag_carrier" scope="player" exclusive="1"/>
+    <variable id="instaheal" scope="match" default="${instaheal-default}"/>
+    <variable id="one_pass_rule" scope="match" default="${one-pass-default}"/>
+    <variable id="passed_once" scope="match" default="0"/>
+    <variable id="last_damage_type" scope="player" default="0"/> <!-- 0: non-melee damage; 1: melee damage -->
+</variables>
 <include id="void-death"/>
 <include id="gapple-kill-reward"/>
 <stats>
@@ -137,7 +157,7 @@
     <kit id="flag-carrier-kit" force="true">
         <action id="give-football" filter="not(carrying-football)">
             <kit id="football-kit">
-                <item prevent-sharing="true" consumable="use-snowball" name="`4`lFootball" material="snowball"/>
+                <item consumable="use-snowball" name="`4`lFootball" material="snowball"/>
             </kit>
         </action>
         <kit id="${flag-carrier-armor-kit}"/>
@@ -146,15 +166,21 @@
         <unless constant="enable-night-vision" constant-value="true">
             <effect>night vision</effect>
         </unless>
+        <if min-server-version="1.21.10">
+            <effect>glowing</effect>
+        </if>
         <effect>slowness</effect>
         <effect duration="3s">fire resistance</effect>
         <max-health>${flag-carrier-health}</max-health>
     </kit>
     <kit id="flag-drop-kit">
-        <action filter="alive"> <!-- ??? need to make issue for error related to this -->
-            <action>
+        <!-- 05/02/2026 can't reproduce issue that required `alive` filtering for the entire
+             kit, but this specific action requires this for the projectile to actually
+             work on modern for some reason. keep alive filtering just in case. -->
+        <action filter="alive">
+            <action filter="not(player_state=${throw})">
                 <replace-item>
-                    <find prevent-sharing="true" consumable="use-snowball" name="`4`lFootball" material="snowball"/>
+                    <find consumable="use-snowball" name="`4`lFootball" material="snowball"/>
                     <replace material="air"/>
                 </replace-item>
             </action>
@@ -247,26 +273,6 @@
 <consumables>
     <consumable id="use-snowball" on="right click" override="false" action="snowball-thrown" consume="false"/>
 </consumables>
-<variables>
-    <with-team id="team_one_score" var="score" team="team-one"/>
-    <with-team id="team_two_score" var="score" team="team-two"/>
-    <variable id="game_state" scope="match" default="${initial}"/>
-    <variable id="can_score" scope="match" default="1"/>
-    <variable id="round_status" scope="match" default="1"/> <!-- 0: team scored; 1: flag is active -->
-    <variable id="buytime" scope="match" default="0"/>
-    <variable id="do_fire" scope="match" default="0"/>
-    <variable id="overtime" scope="match" default="${overtime-default}"/>
-    <variable id="scoring_team" scope="match" default="0"/>
-    <variable id="show_tutorial" scope="match" default="${show-tutorial}"/>
-    <variable id="player_state" scope="player" default="${initial}" exclusive="1"/>
-    <variable id="player_score" scope="player" default="0"/>
-    <variable id="goal_scorer" scope="player" exclusive="1"/>
-    <variable id="flag_carrier" scope="player" exclusive="1"/>
-    <variable id="instaheal" scope="match" default="${instaheal-default}"/>
-    <variable id="one_pass_rule" scope="match" default="${one-pass-default}"/>
-    <variable id="passed_once" scope="match" default="0"/>
-    <variable id="last_damage_type" scope="player" default="0"/> <!-- 0: non-melee damage; 1: melee damage -->
-</variables>
 <filters>
     <any id="remove-entities">
         <entity>snowball</entity>
@@ -277,11 +283,11 @@
         <material>barrier</material>
     </not>
     <!-- flag-pickup-via-entity handles cases where the flag carrier disconnects mid-game.
-    <! - If a flag-carrier disconnects, the snowball in their inventory drops onto the ground,
-    <! - meaning if a player picks up that snowball, it should be treated as a flag pickup. -->
+         If a flag-carrier disconnects, the snowball in their inventory drops onto the ground,
+         meaning if a player picks up that snowball, it should be treated as a flag pickup. -->
     <all id="flag-pickup-via-entity">
         <carrying id="carrying-football">
-            <item prevent-sharing="true" consumable="use-snowball" name="`4`lFootball" material="snowball"/>
+            <item consumable="use-snowball" name="`4`lFootball" material="snowball"/>
         </carrying>
         <not>
             <carrying-flag id="has-flag">flag</carrying-flag>
@@ -548,7 +554,7 @@
         <action id="reset-after-capture">
             <set var="game_state" value="${initial}"/>
             <set var="passed_once" value="0"/>
-            <switch-scope inner="player">
+            <switch-scope inner="player" observers="true">
                 <action id="reset-player-state"/>
             </switch-scope>
         </action>
@@ -560,7 +566,9 @@
             <fill region="flag-indicator-upper-inner" material="${indicator-inner-material}"/>
             <fill region="flag-indicator-lower-inner" material="${indicator-inner-material}"/>
         </unless>
-        <kill-entities filter="remove-entities"/>
+        <action id="kill-entities" scope="match">
+            <kill-entities filter="remove-entities"/>
+        </action>
         <action filter="match-start-delay">
             <message text=" `e`l»`6 The `cFlag`6 was `cReset`6!" actionbar="`cThe Flag was Reset!"/>
             <sound key="${entity.firework_rocket.twinkle}" volume="1" pitch="1"/>
@@ -651,7 +659,7 @@
             </action>
         </action>
     </action>
-    <trigger action="reset-player-state" filter="reset-observer-variables" scope="player"/>
+    <trigger action="reset-player-state" filter="reset-observer-variables" scope="player" observers="true"/>
     <trigger action="flag-pickup-event" filter="all(has-flag,not(player_state=${carry}))" scope="player"/>
     <trigger action="pickup-flag" filter="return-flag-to-carrier" scope="player"/>
     <trigger action="pickup-flag" filter="all(flag-pickup-via-entity,not(player_state=${carry}))" scope="player"/>
@@ -665,6 +673,13 @@
     <trigger action="reset-flag" filter="match-started" scope="match"/>
     <trigger action="go-sounds" filter="match-start-delay" scope="match"/>
     <trigger action="flag-fire" filter="flag-fire-go" scope="match"/>
+    <trigger filter="dropped-football" scope="player">
+        <action>
+            <switch-scope inner="match">
+                <action id="kill-entities"/>
+            </switch-scope>
+        </action>
+    </trigger>
     <action id="increment-round" scope="player">
         <set var="score" value="score+${score-points}"/>
         <set var="player_score" value="player_score+1"/>
@@ -682,7 +697,7 @@
             <set var="round_status" value="0"/>
             <set var="buytime" value="1"/>
             <action id="reset-fire"/>
-            <kill-entities filter="remove-entities"/>
+            <action id="kill-entities"/>
         </switch-scope>
         <action id="tiebreaker-win"/>
         <action id="message-score-display-player"/>
@@ -726,19 +741,6 @@
         </action>
         <action id="message-score-display-team"/>
         <message text="`5`l╚══════════════╝"/>
-        <switch-scope inner="match">
-            <action id="goal-title"/>
-        </switch-scope>
-    </action>
-    <action id="message-score-display-player" scope="player">
-        <set var="goal_scorer" value="1"/>
-        <switch-scope inner="match">
-            <message text=" `e`l»`r {player}`7 takes it to the end zone!">
-                <replacements>
-                    <player id="player" var="goal_scorer"/>
-                </replacements>
-            </message>
-        </switch-scope>
     </action>
     <action id="message-score-display-team" scope="player">
         <action filter="any(team-one,observing)">
@@ -758,12 +760,20 @@
             </message>
         </action>
     </action>
-    <action id="goal-title" scope="match">
-        <message title="`f`lTOUCHDOWN!" subtitle="`7{player} takes it to the end zone!" fade-in="0.5" stay="3" fade-out="0.5">
-            <replacements>
-                <player id="player" var="goal_scorer"/>
-            </replacements>
-        </message>
+    <action id="message-score-display-player" scope="player">
+        <set var="goal_scorer" value="1"/>
+        <switch-scope inner="match">
+            <message text=" `e`l»`r {player}`7 takes it to the end zone!">
+                <replacements>
+                    <player id="player" var="goal_scorer"/>
+                </replacements>
+            </message>
+            <message title="`f`lTOUCHDOWN!" subtitle="`7{player} takes it to the end zone!" fade-in="0.5" stay="3" fade-out="0.5">
+                <replacements>
+                    <player id="player" var="goal_scorer"/>
+                </replacements>
+            </message>
+        </switch-scope>
     </action>
     <trigger filter="goal-scored" action="message-score-display" scope="player" observers="true"/>
     <trigger filter="team-one-scored" action="scoring_team:=1" scope="player"/>
@@ -952,6 +962,9 @@
     <item>banner</item>
     <item>golden apple</item>
 </itemremove>
+<itemkeep>
+    <item>snowball</item>
+</itemkeep>
 <disabledamage>
     <damage>fall</damage>
     <damage ally="${disable-ally-damage}" enemy="false" other="false">entity attack</damage>
