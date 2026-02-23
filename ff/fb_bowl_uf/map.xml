@@ -43,7 +43,7 @@
 <kits>
     <kit id="flag-carrier-no-movement" parent="flag-carrier-effects" force="true">
         <effect amplifier="100">slowness</effect>
-        <effect amplifier="100">jump</effect>
+        <effect amplifier="-25">jump</effect>
     </kit>
 </kits>
 <regions>
