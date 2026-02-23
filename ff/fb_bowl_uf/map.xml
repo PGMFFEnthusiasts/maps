@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Fireballs Bowl: Ultimate Frisbee</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2026-02-22</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -43,6 +43,7 @@
 <kits>
     <kit id="flag-carrier-no-movement" parent="flag-carrier-effects" force="true">
         <effect amplifier="255">slowness</effect>
+        <effect amplifier="-255">jump</effect>
     </kit>
 </kits>
 <regions>
