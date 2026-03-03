@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-size">11</constant>
@@ -18,7 +18,7 @@
 </constants>
 <include id="touchdown"/>
 <authors>
-    <author uuid="38ef938a-7020-4c04-9d12-4875ed0598ca"/> <!-- jcane -->
+    <author uuid="38ef938a-7020-4c04-9d12-4875ed0598ca"/> <!-- Kazoha -->
 </authors>
 <spawns>
     <default>
@@ -31,7 +31,8 @@
     <cuboid id="playing-field" min="-24,5,-45" max="25,12,66"/>
     <cuboid id="team-one-portal" min="-24,6,-45" max="25,10,-34"/> <!-- where team two scores -->
     <cuboid id="team-two-portal" min="25,6,66" max="-24,10,55"/> <!-- where team one scores -->
-    <cuboid id="flag-indicator-upper" min="-1,17,9" max="2,21,13"/>
-    <cuboid id="flag-indicator-lower" min="-1,14,9" max="2,16,13"/>
+    <cuboid id="flag-indicator-upper" min="-1,17,9" max="2,21,12"/>
+    <cuboid id="flag-indicator-lower" min="-1,14,9" max="2,16,12"/>
 </regions>
+
 </map>
