@@ -1,11 +1,11 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.1</version>
+<version>1.0.2</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-size">11</constant>
-    <constant id="team-one-name">Blue Lock</constant>
-    <constant id="team-two-name">U-20 Japan</constant>
+    <constant id="team-one-name" kit="night-vision-kit">Blue Lock</constant>
+    <constant id="team-two-name" kit="night-vision-kit">U-20 Japan</constant>
     <constant id="team-one-color">blue</constant>
     <constant id="team-two-color">red</constant>
     <constant id="team-one-spawn">0.5,18,-44.5</constant>
@@ -20,8 +20,13 @@
 <authors>
     <author uuid="38ef938a-7020-4c04-9d12-4875ed0598ca"/> <!-- Kazoha -->
 </authors>
+<kits>
+    <kit id="night-vision-kit">
+        <effect>night vision</effect>
+    </kit>
+</kits>
 <spawns>
-    <default>
+    <default kit="night-vision-kit">
         <regions>
             <point yaw="90">49.5,6,10.5</point>
         </regions>
@@ -34,5 +39,4 @@
     <cuboid id="flag-indicator-upper" min="-1,17,9" max="2,21,12"/>
     <cuboid id="flag-indicator-lower" min="-1,14,9" max="2,16,12"/>
 </regions>
-
 </map>
