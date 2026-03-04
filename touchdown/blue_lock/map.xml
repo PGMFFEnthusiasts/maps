@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.4</version>
+<version>1.0.5</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-size">11</constant>
@@ -21,9 +21,11 @@
 <authors>
     <author uuid="38ef938a-7020-4c04-9d12-4875ed0598ca"/> <!-- Kazoha -->
 </authors>
-<kit id="obs-night-vision">
-    <effect>night vision</effect>
-</kit>
+<kits>
+    <kit id="obs-night-vision">
+        <effect>night vision</effect>
+    </kit>
+</kits>
 <spawns>
     <default kit="obs-night-vision">
         <regions>
