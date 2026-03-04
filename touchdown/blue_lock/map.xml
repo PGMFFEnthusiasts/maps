@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.3</version>
+<version>1.0.1</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-size">11</constant>
@@ -15,30 +15,11 @@
     <constant id="flag-post">0.5,9,10.5</constant>
     <constant id="void-plane">2</constant>
     <constant id="instaheal-default">0</constant>
-    <constant id="obs-kit">night-vision-kit</constant>
 </constants>
 <include id="touchdown"/>
 <authors>
     <author uuid="38ef938a-7020-4c04-9d12-4875ed0598ca"/> <!-- Kazoha -->
 </authors>
-<kits>
-    <kit id="night-vision-kit">
-        <effects>
-            <effect type="night_vision" duration="infinite" amplifier="0"/>
-        </effects>
-    </kit>
-</kits>
-<modify>
-    <team id="blue">
-        <kit id="night-vision-kit"/>
-    </team>
-    <team id="red">
-        <kit id="night-vision-kit"/>
-    </team>
-    <observers>
-        <kit id="night-vision-kit"/>
-    </observers>
-</modify>
 <spawns>
     <default>
         <regions>
