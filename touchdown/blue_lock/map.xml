@@ -1,11 +1,11 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.2</version>
+<version>1.0.3</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-size">11</constant>
-    <constant id="team-one-name" kit="night-vision-kit">Blue Lock</constant>
-    <constant id="team-two-name" kit="night-vision-kit">U-20 Japan</constant>
+    <constant id="team-one-name">Blue Lock</constant>
+    <constant id="team-two-name">U-20 Japan</constant>
     <constant id="team-one-color">blue</constant>
     <constant id="team-two-color">red</constant>
     <constant id="team-one-spawn">0.5,18,-44.5</constant>
@@ -15,6 +15,7 @@
     <constant id="flag-post">0.5,9,10.5</constant>
     <constant id="void-plane">2</constant>
     <constant id="instaheal-default">0</constant>
+    <constant id="obs-kit">night-vision-kit</constant>
 </constants>
 <include id="touchdown"/>
 <authors>
@@ -22,11 +23,24 @@
 </authors>
 <kits>
     <kit id="night-vision-kit">
-        <effect>night vision</effect>
+        <effects>
+            <effect type="night_vision" duration="infinite" amplifier="0"/>
+        </effects>
     </kit>
 </kits>
+<modify>
+    <team id="blue">
+        <kit id="night-vision-kit"/>
+    </team>
+    <team id="red">
+        <kit id="night-vision-kit"/>
+    </team>
+    <observers>
+        <kit id="night-vision-kit"/>
+    </observers>
+</modify>
 <spawns>
-    <default kit="night-vision-kit">
+    <default>
         <regions>
             <point yaw="90">49.5,6,10.5</point>
         </regions>
