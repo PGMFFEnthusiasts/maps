@@ -15,6 +15,7 @@
     <constant id="flag-post">0.5,9,10.5</constant>
     <constant id="void-plane">2</constant>
     <constant id="instaheal-default">0</constant>
+    <constant id="enable-night-vision">true</constant>
 </constants>
 <include id="touchdown"/>
 <authors>
