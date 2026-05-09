@@ -1,24 +1,25 @@
 <map proto="1.5.0">
 <name>Prospect Park</name>
 <game>Teamfight Touchdown</game>
-<version>1.0.0</version>
+<version>1.1.4</version>
 <created>2025-09-19</created>
 <constants>
-    <constant id="team-size">12</constant>
+    <constant id="team-size">16</constant>
     <constant id="team-one-name">Blue</constant>
     <constant id="team-two-name">Red</constant>
     <constant id="team-one-color">blue</constant>
     <constant id="team-two-color">dark red</constant>
-    <constant id="team-one-spawn">125.5,20,0.5</constant>
+    <constant id="team-one-spawn">114.5,26,0.5</constant>
     <constant id="team-one-yaw">90</constant>
-    <constant id="team-two-spawn">-124.5,20,0.5</constant>
+    <constant id="team-two-spawn">-113.5,26,0.5</constant>
     <constant id="team-two-yaw">-90</constant>
     <constant id="flag-post">0,13,0</constant>
     <constant id="fire-material">fire</constant>
     <constant id="enable-night-vision">true</constant>
     <constant id="main-kit">base-kit</constant>
+    <constant id="armor-kit">custom-armor-kit</constant>
+    <constant id="flag-carrier-armor-kit">custom-flag-carrier-armor-kit</constant>
     <constant id="flag-carrier-effects">flag-carrier-effects</constant>
-    <constant id="flag-drop-kit">custom-flag-drop-kit</constant>
     <constant id="flag-color">white</constant>
     <constant id="void-plane">0</constant>
     <constant id="flag-respawn">8s</constant>
@@ -26,9 +27,11 @@
     <constant id="time-limit">10m</constant>
     <constant id="indicator-outer-material"  delete="true"/> <!-- Delete to disable physical indicators -->
     <constant id="indicator-inner-material" delete="true"/>
+    <constant id="show-tutorial">0</constant>
+    <constant id="one-pass-default">0</constant> <!-- 0: one pass rule disabled; 1: enabled -->
     <!--custom constants for classes abilties-->
-    <constant id="superjump-ability-cooldown">15</constant>
-    <constant id="tackle-ability-cooldown">80</constant>
+    <constant id="superjump-ability-cooldown">8</constant>
+    <constant id="tackle-ability-cooldown">80</constant> <!--80 ticks-->
     <if variant="comp">
         <constant id="team-size">9</constant>
         <constant id="instaheal-default">0</constant>
@@ -37,20 +40,29 @@
 </constants>
 <include id="touchdown"/>
 <authors>
-    <author uuid="1aad55f7-2dea-4f22-85ca-ad9de3a78609" contribution="Map decorator and xml dev"/> <!-- Technodono -->
-    <author uuid="fbd1c001-bbeb-4aac-8f18-2b1962fe6722" contribution="Map builder"/> <!-- TheM1ghtyBear -->
+    <author uuid="1aad55f7-2dea-4f22-85ca-ad9de3a78609" contribution="Builder and Map Developer"/> <!-- Technodono -->
+    <author uuid="fbd1c001-bbeb-4aac-8f18-2b1962fe6722" contribution="Map Layout and Cityscape"/> <!-- TheM1ghtyBear -->
 </authors>
 <contributors>
     <contributor uuid="fe3608b7-d105-4029-8800-34b3147065b6" contribution="Custom trees"/> <!-- rockymine -->
 </contributors>
 <kits>
-    <kit id="base-kit">
-        <clear items="true" armor="false" effects="false"/>
+    <kit id="base-kit" parent="apply-custom-healthbars">
         <item slot="1" amount="6" projectile="arrow" name="`rCrossbow" lore="`r`7Right-click to fire!" material="firework charge"/>
         <item slot="7" material="compass"/>
         <item slot="8" material="golden apple"/>
-        <kit id="apply-custom-heathbars"/>
         <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="custom-armor-kit" force="true">
+        <helmet unbreakable="true" team-color="true" locked="true" material="leather helmet"/>
+        <leggings unbreakable="true" locked="true" material="chainmail leggings">
+            <enchantment level="3">projectile_protection</enchantment>
+        </leggings>
+        <boots unbreakable="true" locked="true" material="iron boots"/>
+    </kit>
+    <kit id="custom-flag-carrier-armor-kit" force="true">
+        <helmet material="air"/>
+        <boots unbreakable="true" team-color="true" locked="true" material="leather boots"/>
     </kit>
     <kit id="custom-flag-carrier-effects">
         <unless constant="enable-night-vision" constant-value="true">
@@ -59,26 +71,8 @@
         <effect>slowness</effect>
         <effect duration="3s">fire resistance</effect>
     </kit>
-    <kit id="custom-flag-drop-kit">
-        <action filter="alive">
-            <action>
-                <replace-item>
-                    <find prevent-sharing="true" consumable="use-snowball" name="`4`lFootball" material="snowball"/>
-                    <replace material="air"/>
-                </replace-item>
-            </action>
-            <kit id="${armor-kit}"/>
-            <action id="apply-heal"/>
-        </action>
-    </kit>
-    <kit id="apply-custom-heathbars" force="true">
-        <kit id="light-class-health"/>
-        <kit id="ultra-light-class-health"/>
-    </kit>
-    <kit id="apply-custom-flag-heathbars">
-        <kit id="medium-class-flag-health"/>
-        <kit id="light-class-flag-health"/>
-    </kit>
+    <kit id="apply-custom-healthbars" force="true" parents="light-class-health,ultra-light-class-health"/>
+    <kit id="apply-custom-flag-healthbars"  parents="medium-class-flag-health,light-class-flag-health"/>
     <kit id="light-class-health" filter="any(has-ranger,has-jumper)">
         <max-health>16</max-health>
     </kit>
@@ -91,50 +85,173 @@
     <kit id="light-class-flag-health" filter="any(has-ranger,has-jumper,has-sprinter)">
         <max-health>12</max-health>
     </kit>
+    <kit id="custom-tutorial-kit">
+        <book show-other="false">
+            <title>`e`lHow to Play and Class List</title>
+            <author>MewTwoKing and Technodono</author>
+            <pages>
+                <page>
+                    `2» `lTOUCHDOWN
+                    `2» Overview`0
+
+                    Each team has a
+                    `6score box`0 located
+                    on the other side of
+                    the map.
+
+                    Players must first
+                    `6touch`0 the flag,
+                    located at the center
+                    of the map, and run to
+                    the enemy team's side
+                    to capture!
+                </page>
+                <page>
+                    `2» `lTOUCHDOWN
+                    `2» Passing (1/2)`0
+
+                    The player with the
+                    flag gets a `6snowball`0,
+                    which can be thrown to
+                    `6pass`0 the flag to the
+                    player it hits.
+
+                    If the snowball `6misses`0,
+                    the flag will simply
+                    respawn at the center.
+                </page>
+                <page>
+                    `2» `lTOUCHDOWN
+                    `2» Passing (2/2)`0
+
+                    Caution: enemies can
+                    `6intercept`0 the flag if
+                    they are hit by the
+                    snowball you throw!
+
+                    Passing is a core part
+                    of this game; use it to
+                    make `6strategic`0 plays
+                    and beat the enemy!
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Attacker (1/6)`0
+                    `8» Weapons (Stone Sword, Crossbow)`0
+
+                    The core class of 
+                    teamfight touchdown. 
+                    With it's well rounded 
+                    stats and simple kit it 
+                    is a great introduction
+                    to teamfight touchdown.
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Defender (2/6)`0
+                    `8» Weapons (Sharpness Stone Sword, Crossbow)`0
+
+                    Gives the player sheild points which regenerate after exiting combat.
+
+                    This class has knockback reduction
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Ranger (3/6)`0
+                    `8» Weapons (Stone Sword, Crossbow, Bow)`0
+
+                    The class starts with
+                    a bow and a limited 
+                    supply of arrows. 
+                    Additional arrows can 
+                    be earned back 
+                    through kills.
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Sprinter (4/6)`0
+                    `8» Weapons (Wooden Sword, Crossbow)`0
+
+                    A hight octane, yet 
+                    frail class.
+
+                    With it's passive flag
+                    runner ability it has 
+                    no health penalty for 
+                    holding the flag.
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Jumper (5/6)`0
+                    `8» Weapons (Wooden Sword, Crossbow)`0
+
+                    By pressing space 
+                    while in the air 
+                    players can perform 
+                    a high jump allowing 
+                    for quick escapes or 
+                    to duke out opponents.
+                </page>
+                <page>
+                    `2» `lCLASSES
+                    `2» Blocker (6/6)`0
+                    `8» Weapons (Stone Sword, Crossbow)`0
+                    
+                    Spawns with a rechargeable ability that knocks back enemies when hit and instantly strips the flag.
+                    
+                    This class has knockback reduction
+                </page>
+            </pages>
+        </book>
+    </kit>
+<give kit="custom-tutorial-kit" filter="all(observing)"/>
 </kits>
 <classes family="Classes">
     <class name="Attacker" default="true" description="`a`lMovement| ██`8░ `n`6`lCombat| ██`8░ `n`d`lHealth| ██`8░ `n`b`l Ability: `7None " icon="gold sword">
-        <kit parents="base-kit">
+        <kit parents="base-kit" id="attacker">
             <item slot="0" unbreakable="true" material="stone sword"/>
-            <attribute operation="base" amount="0.75">generic.movementSpeed</attribute>
+            <chestplate unbreakable="true" color="7f7f7f" locked="true" material="leather chestplate"/>
         </kit>
     </class>
-    <class name="Defender" description="`a`lMovement| █`8░░ `n`6`lCombat| ██`7▒ `n`d`lHealth| ███ `n`b`l Ability: `7Extra Protection" icon="iron chestplate">
-        <kit parents="base-kit">
+    <class name="Defender" description="`a`lMovement| █`8░░ `n`6`lCombat| ██`7▒ `n`d`lHealth| ███ `n`b`l Ability: `7Shield Points" icon="iron chestplate">
+        <kit parents="base-kit" id="defender">
             <item slot="0" unbreakable="true" material="stone sword" enchantment="sharpness:1"/>
-            <attribute operation="base" amount="0.65">generic.movementSpeed</attribute>
+            <chestplate unbreakable="true" color="FF0C7F" locked="true" material="leather chestplate"/>
+            <walk-speed>0.9</walk-speed>
             <knockback-reduction>0.25</knockback-reduction>
             <shield health="4" delay="8s"/>
         </kit>
     </class>
     <class name="Ranger" description="`a`lMovement| ██`8░ `n`6`lCombat| ███ `n`d`lHealth| █`7▒`8░ `n`b`l Ability: `7Bow Kit" icon="bow">
-        <kit parents="base-kit">
+        <kit parents="base-kit" id="ranger">
             <item slot="0" unbreakable="true" material="stone sword"/>
             <item slot="2" unbreakable="true" material="bow"/>
             <item slot="9" amount="12" material="arrow"/>
-            <attribute operation="base" amount="0.75">generic.movementSpeed</attribute>
+            <chestplate unbreakable="true" color="7FFF0C" locked="true" material="leather chestplate"/>
         </kit>
     </class>
     <class name="Sprinter" description="`a`lMovement| ███ `n`6`lCombat| █`8░░ `n`d`lHealth| █`8░░ `n`b`l Ability: `7Flag Runner" icon="feather">
-        <kit parents="base-kit">
+        <kit parents="base-kit" id="sprinter">
             <item slot="0" unbreakable="true" material="wood sword"/>
-            <attribute operation="base" amount="0.9">generic.movementSpeed</attribute>
+            <chestplate unbreakable="true" color="0fffff" locked="true" material="leather chestplate"/>
+            <walk-speed>1.35</walk-speed>
         </kit>
     </class>
-    <class name="Jumper" description="`a`lMovement| ██`7▒ `n`6`lCombat| █`8░░ `n`d`lHealth| █`7▒`8░ `n`b`l Ability: `7Superjump" icon="flint and steel">
-        <kit parents="base-kit">
+    <class name="Jumper" description="`a`lMovement| ██`8░ `n`6`lCombat| █`8░░ `n`d`lHealth| █`7▒`8░ `n`b`l Ability: `7Superjump" icon="flint and steel">
+        <kit parents="base-kit" id="jumper">
             <item slot="0" unbreakable="true" material="wood sword"/>
-            <attribute operation="base" amount="0.75">generic.movementSpeed</attribute>
-            <double-jump recharge-time="${superjump-ability-cooldown}" power="4.5"/>
+            <chestplate unbreakable="true" color="BF8CFF" locked="true" material="leather chestplate"/>
+            <double-jump recharge-time="${superjump-ability-cooldown}" power="3.5"/>
         </kit>
     </class>
     <class name="Blocker" description="`a`lMovement| █`7▒`8░ `n`6`lCombat| ██`8░ `n`d`lHealth| ██`8░ `n`b`l Ability: `7Tackle" icon="anvil">
-        <kit parents="base-kit">
+        <kit parents="base-kit" id="blocker">
+            <action id="reset-tackle-cooldown"/>
             <item slot="0" unbreakable="true" material="stone sword"/>
             <item slot="2" material="gold hoe" enchantment="knockback:2" prevent-sharing="true" name="`rAbility: `e`lTackle" lore="`7Instantly strips the flag carrier."/>
-            <action id="fill-xp-bar"/>
+            <chestplate unbreakable="true" color="FFBF0C" locked="true" material="leather chestplate"/>
             <knockback-reduction>0.25</knockback-reduction>
-            <attribute operation="base" amount="0.70">generic.movementSpeed</attribute>
+            <walk-speed>0.95</walk-speed>
         </kit>
     </class>
 </classes>
@@ -149,15 +266,10 @@
     </default>
 </spawns>
 <variables>
-    
     <player-location id="xp_bar_prog" component="exp progress"/>
     <variable id="tackle_ability_cd" default="0" scope="player"/>
 </variables>
 <filters>
-    <above id="team-one-6s" x="34"/>
-    <above id="team-one-4.5s" x="12"/>
-    <below id="team-two-6s" x="-33"/>
-    <below id="team-two-4.5s" x="-11"/>
     <class id="has-attacker">Attacker</class>
     <class id="has-defender">Defender</class>
     <class id="has-ranger">Ranger</class>
@@ -166,7 +278,7 @@
     <class id="has-blocker">Blocker</class>
     <after filter="not(has-flag)" duration="0.01" id="not-has-flag-0.01"/>
     <after filter="has-flag" duration="0.01" id="has-flag-0.01"/>
-    <pulse id="tackle-progress" duration="0.05" period="0.1" filter="tackle_ability_cd=1.."/>
+    <pulse id="tackle-progress" duration="0.05" period="0.1" filter="all(tackle_ability_cd=1..,not(during-buytime))"/>
     <all id="can-force-strip-flag">
         <victim>
             <variable var="player_state">${carry}</variable>
@@ -188,14 +300,8 @@
     </carrying>
 </filters>
 <actions>
-    <trigger filter="not-has-flag-0.01" action="set-custom-healthbar" scope="player"/>
-    <action id="set-custom-healthbar" scope="player">
-        <kit id="apply-custom-heathbars"/>
-    </action>
-    <trigger filter="has-flag-0.01" action="set-custom-flag-healthbar" scope="player"/>
-    <action id="set-custom-flag-healthbar" scope="player">
-        <kit id="apply-custom-flag-heathbars"/>
-    </action>
+    <trigger filter="not-has-flag-0.01" action="apply-custom-healthbars" scope="player"/>
+    <trigger filter="has-flag-0.01" action="apply-custom-flag-healthbars" scope="player"/>
     <action id="use-tackle-ability" scope="player" filter="attacker-is-using-ability">
         <action filter="can-force-strip-flag">
             <action id="flag-steal-event"/>
@@ -210,7 +316,7 @@
     <trigger filter="tackle-progress" scope="player">
         <action>
             <set var="tackle_ability_cd" value="tackle_ability_cd-1"/>
-            <set var="xp_bar_prog" value="min(0.99, 1 - (tackle_ability_cd/${tackle-ability-cooldown}))" />
+            <set var="xp_bar_prog" value="min(0.99, 1 - (tackle_ability_cd/${tackle-ability-cooldown}))"/>
             <action filter="tackle_ability_cd=0">
                 <replace-item>
                     <find material="stone hoe" prevent-sharing="true" name="`7Ability: `8`lTackle" lore="`7Instantly strips the flag carrier."/>
@@ -219,14 +325,20 @@
             </action>
         </action>
     </trigger>
-    <action id="fill-xp-bar"  scope="player">
+    <trigger filter="during-buytime" action="reset-tackle-cooldown" scope="player"/>
+    <action id="reset-tackle-cooldown"  scope="player">
+        <set var="tackle_ability_cd" value="0"/>
         <set var="xp_bar_prog" value="1"/>
+        <replace-item>
+            <find material="stone hoe" prevent-sharing="true" name="`7Ability: `8`lTackle" lore="`7Instantly strips the flag carrier."/>
+            <replace material="gold hoe" enchantment="knockback:2" prevent-sharing="true" name="`rAbility: `e`lTackle" lore="`7Instantly strips the flag carrier."/>
+        </replace-item>
     </action>
     <action id="receive-tackle-ability" scope="player" filter="can-force-strip-flag">
         <set var="player_state" value="${initial}"/>
         <set var="flag_carrier" value="0"/>
     </action>
-    <trigger filter="all(not(has-gold-hoe),not(has-stone-hoe))" action="give-new-tackle-ability" scope="player"/>
+    <trigger filter="all(not(has-gold-hoe),not(has-stone-hoe),not(during-buytime))" action="give-new-tackle-ability" scope="player"/>
     <action id="give-new-tackle-ability" scope="player" filter="all(has-blocker,alive)">
         <action filter="tackle_ability_cd=1..">
             <kit>
@@ -249,26 +361,40 @@
     </action>
 </actions>
 <regions>
-    <cuboid id="playing-field" min="-142,0,73" max="143,50,-72"/>
+    <cuboid id="playing-field" min="-94,0,54" max="95,50,-53"/>
+    <cuboid id="player-boundary" min="142,-200,-71" max="-141,200,72"/>
     <!-- scoring zones -->
     <union id="team-one-portal">
-        <cuboid min="115,6,25" max="142,10,72"/>
-        <cuboid min="-115,6,-24" max="142,10,-71"/>
+        <cuboid id="left-goal" min="68,0,-12" max="95,9,-53"/>
+        <mirror normal="0,0,1" origin="0.5,0,0.5" region="left-goal"/>
     </union>
-    <union id="team-two-portal">
-        <cuboid min="-114,6,-24" max="-141,10,-71"/>
-        <cuboid min="-114,6,25" max="-141,10,72"/>
-    </union>
-    <cuboid id="red-pad" min="-117,21,-2" max="-115,22,3"/>
+    <mirror id="team-two-portal" normal="1,0,0" origin="0.5,0,0.5" region="team-one-portal"/>
+    <cuboid id="red-pad" min="-105,26,-16" max="-108,36,17"/>
     <mirror id="blue-pad" origin="0.5,13,0.5" normal="1,0,0" region="red-pad"/>
     <apply block-physics="never"/>
-    <apply velocity="2,0.8,0.0" region="red-pad"/>
-    <apply velocity="-2,0.8,0.0" region="blue-pad"/>
+    <apply leave="never" region="player-boundary" message="You may not leave the field!"/>
+    <apply velocity="4,1,0.0" region="red-pad"/>
+    <apply velocity="-4,1,0.0" region="blue-pad"/>
 </regions>
 <compass show-distance="true">
     <player filter="has-flag" show-player="true" name="Flag Carrier"/>
 </compass>
+<world>
+    <timeset>6000</timeset>
+</world>
 <damage attacker-action="custom-attacker-actions" victim-action="custom-victim-actions"/>
+<damage>
+    <deny>
+        <all>
+            <not>
+                <damager>
+                    <entity>snowball</entity>
+                </damager>
+            </not>
+            <filter id="ally-damage"/>
+        </all>
+    </deny>
+</damage>
 <kill-rewards>
     <kill-reward>
         <item amount="3" projectile="arrow" name="`rCrossbow" lore="`r`7Right-click to fire!" material="firework charge"/>
@@ -277,13 +403,17 @@
         <item amount="6" material="arrow"/>
     </kill-reward>
 </kill-rewards>
+<itemremove>
+    <item>wood sword</item>
+    <item>stone sword</item>
+    <item>gold hoe</item>
+    <item>stone hoe</item>
+    <item>bow</item>
+</itemremove>
 <itemkeep>
     <item>firework charge</item>
     <item>compass</item>
-    <item>gold hoe</item>
-    <item>stone hoe</item>
     <item>arrow</item>
-    <item>bow</item>
 </itemkeep>
 <toolrepair>
     <tool>compass</tool>
