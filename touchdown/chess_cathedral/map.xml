@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Chess Cathedral</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2026-05-10</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -38,7 +38,7 @@
 <spawns>
     <default>
         <regions>
-            <point yaw="90">-43.5,11,0.5</point>
+            <point yaw="-90">-43.5,11,0.5</point>
         </regions>
     </default>
 </spawns>
