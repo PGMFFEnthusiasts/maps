@@ -1,8 +1,9 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.0</version>
+<version>1.0.1</version>
 <created>2026-02-15</created>
 <constants>
+    <constant id="team-flag-posts">true</constant>
     <constant id="team-size">11</constant>
     <constant id="team-one-name">Blue Lock</constant>
     <constant id="team-two-name">U-20 Japan</constant>
@@ -13,9 +14,13 @@
     <constant id="team-two-spawn">0.5,18,68.5</constant>
     <constant id="team-two-yaw">180</constant>
     <constant id="flag-post">0.5,9,10.5</constant>
+    <constant id="team-one-flag-post">0.5,3,-31.5</constant>
+    <constant id="team-two-flag-post">0.5,3,52.5</constant>
     <constant id="void-plane">2</constant>
-    <constant id="instaheal-default">0</constant>
     <constant id="time-limit">12m</constant>
+    <constant id="flag-respawn">7s</constant>
+    <constant id="flag-prerespawn">6.8s</constant>
+    <constant id="instaheal-default">0</constant>   
     <constant id="enable-night-vision">true</constant> <!-- set this on true due to low light conditions -->
 </constants>
 <include id="touchdown"/>
@@ -37,6 +42,12 @@
         </regions>
     </default>
 </spawns>
+<filters>
+    <below id="team-one-4s" z="-21.5"/>
+    <below id="team-one-3s" z="0.5"/>
+    <above id="team-two-4s" z="22.5"/>
+    <above id="team-two-3s" z="0.5"/>       
+</filters>  
 <regions>
     <cuboid id="playing-field" min="-24,5,-45" max="25,12,66"/>
     <cuboid id="team-one-portal" min="-24,6,-45" max="25,10,-34"/> <!-- where team two scores -->
