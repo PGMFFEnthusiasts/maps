@@ -1,6 +1,6 @@
 <map proto="1.5.0">
 <name>Blue Lock</name>
-<version>1.0.1</version>
+<version>1.0.2</version>
 <created>2026-02-15</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -43,16 +43,21 @@
     </default>
 </spawns>
 <filters>
-    <below id="team-one-4s" z="-21.5"/>
-    <below id="team-one-3s" z="0.5"/>
-    <above id="team-two-4s" z="22.5"/>
-    <above id="team-two-3s" z="0.5"/>       
+    <below id="team-one-4s" z="-16.5"/>
+    <below id="team-one-3s" z="10.5"/>
+    <above id="team-two-4s" z="37.5"/>
+    <above id="team-two-3s" z="10.5"/>       
 </filters>  
 <regions>
     <cuboid id="playing-field" min="-24,5,-45" max="25,12,66"/>
     <cuboid id="team-one-portal" min="-24,6,-45" max="25,10,-34"/> <!-- where team two scores -->
     <cuboid id="team-two-portal" min="25,6,66" max="-24,10,55"/> <!-- where team one scores -->
-    <cuboid id="flag-indicator-upper" min="-1,17,9" max="2,21,12"/>
-    <cuboid id="flag-indicator-lower" min="-1,14,9" max="2,16,12"/>
 </regions>
+<respawns auto="true">
+    <respawn filter="all(team-one-4s,team-one,game_state=${carry})" delay="4s"/>
+    <respawn filter="all(team-one-3s,team-one,game_state=${carry})" delay="3.5s"/>
+    <respawn filter="all(team-two-4s,team-two,game_state=${carry})" delay="4s"/>
+    <respawn filter="all(team-two-3s,team-two,game_state=${carry})" delay="3.5s"/>
+    <respawn delay="3s"/>
+</respawns>
 </map>
