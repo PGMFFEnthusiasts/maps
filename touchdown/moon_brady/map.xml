@@ -1,6 +1,6 @@
 <map proto="1.5.1">
 <name>Moon Brady</name>
-<version>1.0.4</version>
+<version>1.0.5</version>
 <created>2026-07-03</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -17,6 +17,9 @@
     <constant id="team-one-flag-post">-36.5,7,0.5</constant>
     <constant id="team-two-flag-post">36.5,7,0.5</constant>
     <constant id="void-plane">-1</constant>
+        <constant id="time-limit">12m</constant>
+    <constant id="flag-respawn">7s</constant>
+    <constant id="flag-prerespawn">6.8s</constant>
     <constant id="instaheal-default">2</constant>
 </constants>
 <include id="touchdown"/>
