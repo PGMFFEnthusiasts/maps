@@ -1,0 +1,46 @@
+<map proto="1.5.1">
+<name>Moon Brady</name>
+<version>1.0.1</version>
+<created>2026-07-03</created>
+<constants>
+    <constant id="team-flag-posts">true</constant>
+    <constant id="team-size">8</constant>
+    <constant id="team-one-name">Blue Team</constant>
+    <constant id="team-two-name">Red Team</constant>
+    <constant id="team-one-color">blue</constant>
+    <constant id="team-two-color">red</constant>
+    <constant id="team-one-spawn">-53.5,18,0.5</constant>
+    <constant id="team-one-yaw">-90</constant>
+    <constant id="team-two-spawn">53.5,18,0.5</constant>
+    <constant id="team-two-yaw">90</constant>
+    <constant id="flag-post">0.5,10,0.5</constant>
+    <constant id="team-one-flag-post">-36.5,7,0.5</constant>
+    <constant id="team-two-flag-post">36.5,7,0.5</constant>
+    <constant id="void-plane">-1</constant>
+</constants>
+<include id="touchdown"/>
+<kits>
+	<kit id="armor-kit">
+        <clear items="false" armor="true" effects="false"/>
+        <helmet locked="true" material="glass"/>
+        <chestplate unbreakable="true" team-color="true" locked="true" material="leather chestplate"/>
+        <leggings unbreakable="true" locked="true" material="iron leggings"/>
+        <boots unbreakable="true" locked="true" material="iron boots"/>
+    </kit>
+</kits>
+<authors>
+    <author uuid="8fbb6041-66cc-4efd-a1b1-55bc60e55739"/> <!-- ATub -->
+</authors>
+<spawns>
+    <default>
+        <region yaw="180">
+            <point>0.5,9,46.5</point>
+        </region>
+    </default>
+</spawns>
+<regions>
+    <cuboid id="playing-field" min="-52,7,28" max="53,14,-27"/>
+    <cuboid id="team-one-portal" min="-41,7,28" max="-52,10,-27"/>
+    <cuboid id="team-two-portal" min="42,7,28" max="53,10,-27"/>
+</regions>
+</map>
