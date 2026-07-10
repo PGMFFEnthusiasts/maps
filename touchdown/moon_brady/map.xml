@@ -1,6 +1,6 @@
 <map proto="1.5.1">
 <name>Moon Brady</name>
-<version>1.0.5</version>
+<version>1.0.6</version>
 <created>2026-07-03</created>
 <constants>
     <constant id="team-flag-posts">true</constant>
@@ -34,10 +34,10 @@
     </default>
 </spawns>
 <filters>
-    <below id="team-one-4s" z="-20.5"/> <!-- Blue -->
-    <below id="team-one-3s" z="0.5"/>
-    <above id="team-two-4s" z="21.5"/> <!-- Red -->
-    <above id="team-two-3s" z="0.5"/>
+    <below id="team-one-4s" x="-20.5"/> <!-- Blue -->
+    <below id="team-one-3s" x="0.5"/>
+    <above id="team-two-4s" x="21.5"/> <!-- Red -->
+    <above id="team-two-3s" x="0.5"/>
 </filters>
 <regions>
     <cuboid id="playing-field" min="-52,7,28" max="53,14,-27"/>
